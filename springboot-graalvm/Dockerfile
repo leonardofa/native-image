@@ -5,7 +5,6 @@ COPY . .
 
 RUN gu install native-image
 RUN ./mvnw -Pnative native:compile -DskipTests
-RUN ls target
 
 FROM ubuntu:22.04 AS final
 

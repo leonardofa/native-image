@@ -5,13 +5,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 @Data
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private UUID id;
     @NotNull
     @Column
     private String sku;
@@ -27,4 +27,10 @@ public class Product {
     @NotNull
     @Column
     private int stock;
+
+    @PrePersist
+    public void prePersist() {
+        this.id = UUID.randomUUID();
+    }
+
 }
