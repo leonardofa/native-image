@@ -1,23 +1,23 @@
-FROM ghcr.io/graalvm/graalvm-ce:latest AS build
+FROM --platform=linux/arm64 ghcr.io/graalvm/native-image:ol9-java17-22.3.3 AS build
 
 WORKDIR /workspace
-COPY . .
 
-RUN gu install native-image
-RUN ./mvnw -Pnative native:compile -DskipTests
+COPY pom.xml mvnw ./
+COPY .mvn ./.mvn
 
-FROM ubuntu:22.04 AS final
+RUN mkdir -p src/main/java
+RUN ./mvnw dependency:go-offline -B
 
-RUN apt-get update && apt-get install -y libstdc++6 && apt-get clean
+COPY src ./src
 
-# Configurar o diretório de trabalho
-WORKDIR /app
+RUN ./mvnw clean -Pnative native:compile -DskipTests
 
-# Copiar o executável gerado na fase anterior
-COPY --from=build /workspace/target/app .
+FROM --platform=linux/arm64 container-registry.oracle.com/os/oraclelinux:9-slim AS final
 
-# Expor a porta usada pelo aplicativo
+WORKDIR /workspace
+
+COPY --from=build /workspace/app .
+
 EXPOSE 8080
 
-# Comando padrão para rodar o binário
 CMD ["./app"]
