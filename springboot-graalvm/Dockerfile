@@ -2,9 +2,11 @@ FROM --platform=linux/arm64 ghcr.io/graalvm/native-image:ol9-java17-22.3.3 AS bu
 
 WORKDIR /workspace
 
-COPY pom.xml mvnw ./
 COPY .mvn ./.mvn
+COPY pom.xml ./
+COPY mvnw ./
 
+RUN chmod +x ./mvnw
 RUN mkdir -p src/main/java
 RUN ./mvnw dependency:go-offline -B
 
