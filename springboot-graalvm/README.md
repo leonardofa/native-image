@@ -3,9 +3,15 @@
 ## Docker way (easy way)
 You must have docker properly set on the env and run. Run all commands below in project root folder
 
+### executing in windows env:
 ```
 docker build -t springboot-graalvm .
 ```
+### or for linux/Mac env:
+```
+docker build --platform=linux/arm64 -t springboot-graalvm .
+```
+and then:
 ```
 docker run --rm -p 8080:8080 --name springboot-graalvm springboot-graalvm
 ```
