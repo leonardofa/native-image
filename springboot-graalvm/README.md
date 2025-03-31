@@ -17,6 +17,11 @@ docker run --rm -p 8080:8080 --name springboot-graalvm springboot-graalvm
 ```
 and open swagger page: http://localhost:8080/
 
+
+``
+docker run -d --rm -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=example -e MONGO_INITDB_DATABASE=native-image-products --name mongodb -p 27017:27017 mongo
+``
+
 ---
 ### Reference Documentation
 

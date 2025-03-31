@@ -15,6 +15,10 @@ RUN ./mvnw clean -Pnative native:compile -DskipTests
 
 FROM container-registry.oracle.com/os/oraclelinux:9-slim AS final
 
+ARG APP_PROFILE=h2
+ENV SPRING_PROFILES_ACTIVE=${APP_PROFILE}
+ENV DB_HOST=jdbc:h2:mem:testdb
+
 WORKDIR /workspace
 
 COPY --from=build /workspace/app .
