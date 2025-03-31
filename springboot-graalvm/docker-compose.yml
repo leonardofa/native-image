@@ -1,44 +1,13 @@
 services:
-  db:
-    hostname: db
-    image: mongo
-    networks:
-      - native-image-network
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: native-image-products
-
-  mongo-express:
-    image: mongo-express
+  api-products-h2:
+    image: "springboot-graalvm:h2"
     ports:
-      - "8081:8081"
-    networks:
-      - native-image-network
-    environment:
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@db:27017/native-image-products?authSource=admin
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
-      ME_CONFIG_BASICAUTH_USERNAME: root
-      ME_CONFIG_BASICAUTH_PASSWORD: example
-    depends_on:
-      - db
-
-  api-products:
-    image: "springboot-graalvm:latest"
-    container_name: springboot-graalvm
-    ports:
-      - "8080:8080"
+      - "8180:8080"
     networks:
       - native-image-network
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        APP_PROFILE: mongdb
-    environment:
-      "DB_HOST": db
-    depends_on:
-      - db
 
 networks:
   native-image-network:

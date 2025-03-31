@@ -17,11 +17,9 @@ public class ExecutionTimeFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     HttpServletRequest httpServletRequest = (HttpServletRequest) request;
     long startTime = System.currentTimeMillis();
-
-    chain.doFilter(request, response); // Continua com a requisição
-
+    chain.doFilter(request, response);
     long elapsedTime = System.currentTimeMillis() - startTime;
     String path = httpServletRequest.getRequestURI();
-    System.out.println("Requisição para [" + path + "] levou " + elapsedTime + " ms.");
+    System.out.printf("Request [%s] spent %s ms.", path, elapsedTime);
   }
 }

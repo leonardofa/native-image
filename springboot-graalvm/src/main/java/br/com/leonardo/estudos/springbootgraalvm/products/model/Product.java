@@ -1,16 +1,21 @@
 package br.com.leonardo.estudos.springbootgraalvm.products.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Document(collection = "products")
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 public class Product {
     @Id
     private UUID id;
@@ -34,5 +39,6 @@ public class Product {
     public void prePersist() {
         this.id = UUID.randomUUID();
     }
+
 
 }

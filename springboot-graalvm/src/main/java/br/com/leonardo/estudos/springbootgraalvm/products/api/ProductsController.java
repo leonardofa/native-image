@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/products")
+@RequestMapping("products")
 @RequiredArgsConstructor
 public class ProductsController {
   private final ProductsRepository repository;
@@ -21,7 +21,7 @@ public class ProductsController {
     return repository.save(product);
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("{id}")
   public Product retrive(@PathVariable UUID id) {
     log.info("Retrieving product {}", id);
     return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Product not found"));
